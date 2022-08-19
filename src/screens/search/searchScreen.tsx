@@ -31,7 +31,7 @@ export const SearchScreen = ({navigation}: ISearchScreenProps): JSX.Element => {
   const trendingGifsStatus = useAppSelector(state => state.trendingGifs.status);
   const searchResultsStatus = useAppSelector(state => state.searchGifs.status);
   const [isFetchingNext, setIsFetchingNext] = useState(false);
-  const currentPage = searchedGifs.length / DEFAULT_LIMIT;
+  const currentPage = Math.floor(searchedGifs.length / DEFAULT_LIMIT);
 
   const [typing, setTyping] = useState(false);
 
@@ -52,12 +52,13 @@ export const SearchScreen = ({navigation}: ISearchScreenProps): JSX.Element => {
     if (currentPage < maxPageLimit) {
       setIsFetchingNext(true);
       try {
-        await dispatch(fetchGifs({query, page: currentPage}));
+        await dispatch(fetchGifs({query, page: currentPage})).unwrap();
+      } catch {
       } finally {
         setIsFetchingNext(false);
       }
     }
-  }, [maxPageLimit, dispatch]);
+  }, [maxPageLimit, dispatch, currentPage]);
 
   const errorHandler = useCallback(
     debounce(() => {

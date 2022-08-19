@@ -81,7 +81,7 @@ export const fetchGifs = createAsyncThunk<
     const response = await giphyApi.search(searchParam);
     const data = formatGIFResponse(response.data.data);
     const totalPage =
-      response.data?.pagination?.total_count / DEFAULT_LIMIT || 0;
+      Math.floor(response.data?.pagination?.total_count / DEFAULT_LIMIT) || 0;
     let update = false;
     if (searchParam.page && searchParam.page > 0) {
       update = true;

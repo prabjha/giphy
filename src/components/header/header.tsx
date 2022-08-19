@@ -1,4 +1,4 @@
-import React, {useCallback} from 'react';
+import React, {useCallback, useEffect} from 'react';
 import {View} from 'react-native';
 
 import {SearchBar} from '@giphy/components';
@@ -16,19 +16,18 @@ export const Header = ({onTyping, typing}: IHeaderProps) => {
   const debounceSearch = useCallback(
     //debouncing function call by 400ms
     debounce((searchText: string) => {
-      console.log(searchText);
-      if (searchText.length > 0)
-        dispatch(fetchGifs({query: searchText, limit: 20}));
       dispatch(searchGifsAction.setQuery(searchText));
     }, 400),
-    [],
+    [dispatch],
   );
-
+  useEffect(() => {
+    if (query.length > 0) dispatch(fetchGifs({query: query, limit: 20}));
+  }, [query]);
   const cancelSearch = useCallback(() => {
     //cancelSearch reference will not get change
     dispatch(searchGifsAction.setGifs([]));
     dispatch(searchGifsAction.setQuery(''));
-  }, []);
+  }, [dispatch]);
 
   return (
     <View style={headerStyles.container}>

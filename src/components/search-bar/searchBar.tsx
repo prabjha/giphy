@@ -23,7 +23,7 @@ export const SearchBar = memo(
       onTyping(false);
       setSearchText('');
       inputRef.current?.blur();
-    }, []);
+    }, [inputRef, onTyping, setSearchText]);
 
     const inputChangeHandler = useCallback(
       (event: NativeSyntheticEvent<TextInputChangeEventData>) => {
@@ -31,7 +31,7 @@ export const SearchBar = memo(
         setSearchText(text);
         search(text);
       },
-      [search],
+      [search, setSearchText],
     );
 
     return (

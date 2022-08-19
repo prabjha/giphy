@@ -74,14 +74,6 @@ export const SearchResult = memo(
         content = (
           <ActivityIndicator size={'large'} animating color={Colors.white} />
         );
-      } else if (currentPage >= maxPageLimit) {
-        if (data?.length == 0) {
-          content = (
-            <Text style={{color: Colors.white, textAlign: 'center'}}>
-              No Result Found
-            </Text>
-          );
-        }
       } else if (currentPage >= autoFetchLimit && currentPage < maxPageLimit) {
         content = (
           <View style={styles.buttonContainer}>
@@ -102,13 +94,29 @@ export const SearchResult = memo(
       }
 
       return <View style={styles.footerContainer}>{content}</View>;
-    }, [maxPageLimit, data, isFetching, currentPage]);
+    }, [
+      maxPageLimit,
+      data?.length,
+      isFetching,
+      currentPage,
+      onEndReached,
+      goToTop,
+      autoFetchLimit,
+    ]);
 
+    const ListEmptyComponent = useCallback(() => {
+      return (
+        <Text style={{color: Colors.white, textAlign: 'center'}}>
+          No Result Found
+        </Text>
+      );
+    }, []);
     return (
       <SafeAreaProvider style={styles.container}>
         <FlatList
           ref={flatListRef}
           showsVerticalScrollIndicator={false}
+          ListEmptyComponent={ListEmptyComponent}
           style={styles.list}
           contentContainerStyle={{paddingVertical: Spacing.medium}}
           data={data}
