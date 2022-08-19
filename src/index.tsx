@@ -1,8 +1,9 @@
 import React from 'react';
-import {View} from 'react-native';
+
+import {AppNavigator} from '@giphy/navigation';
 
 const App = () => {
-  return <View></View>;
+  return <AppNavigator />;
 };
 
 export default App;
