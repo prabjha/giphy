@@ -108,6 +108,7 @@ export const SearchResult = memo(
       <SafeAreaProvider style={styles.container}>
         <FlatList
           ref={flatListRef}
+          showsVerticalScrollIndicator={false}
           style={styles.list}
           contentContainerStyle={{paddingVertical: Spacing.medium}}
           data={data}
