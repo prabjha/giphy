@@ -17,14 +17,15 @@ export const Header = ({onTyping, typing}: IHeaderProps) => {
     //debouncing function call by 400ms
     debounce((searchText: string) => {
       dispatch(searchGifsAction.setQuery(searchText));
-    }, 400),
+    }, 250),
     [dispatch],
   );
   useEffect(() => {
     if (query.length > 0) dispatch(fetchGifs({query: query, limit: 20}));
   }, [query]);
+
   const cancelSearch = useCallback(() => {
-    //cancelSearch reference will not get change
+    //cancelSearch's reference will not get change due to usecallback
     dispatch(searchGifsAction.setGifs([]));
     dispatch(searchGifsAction.setQuery(''));
   }, [dispatch]);

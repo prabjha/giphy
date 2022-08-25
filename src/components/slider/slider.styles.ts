@@ -17,7 +17,7 @@ export default StyleSheet.create({
 
   headerContainer: {
     marginHorizontal: Spacing.small,
-    marginVertical: Spacing.medium,
+    marginBottom: Spacing.medium,
     flexDirection: 'row',
     alignItems: 'center',
   },

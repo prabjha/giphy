@@ -53,13 +53,13 @@ export const searchGifsSlice = createSlice({
       state.status = 'loading';
     });
     builder.addCase(fetchGifs.fulfilled, (state, {payload}) => {
-      state.status = 'succeed';
       if (payload.update) {
         searchGifsAdapter.upsertMany(state, payload.data);
       } else {
         searchGifsAdapter.setAll(state, payload.data);
         state.totalPage = payload.totalPage;
       }
+      state.status = 'succeed';
     });
 
     builder.addCase(fetchGifs.rejected, (state, action) => {

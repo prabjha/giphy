@@ -7,7 +7,7 @@ export default StyleSheet.create({
   container: {
     width: '100%',
     height: '100%',
-    padding: Spacing.medium,
+    paddingHorizontal: Spacing.medium,
     borderColor: Colors.white,
     ...Shadow.small,
   },
@@ -50,6 +50,7 @@ export default StyleSheet.create({
 
   list: {
     flex: 1,
+    paddingBottom: Spacing.hugeXPlus,
   },
 
   listItemContainer: {

@@ -51,7 +51,7 @@ export const SearchBar = memo(
             onBlur={() => onTyping(false)}
           />
         </View>
-        {typing && (
+        {(typing || searchText.length !== 0) && (
           <TouchableOpacity
             style={searchBarStyles.cancelButton}
             activeOpacity={0.6}

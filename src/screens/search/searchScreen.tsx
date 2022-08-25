@@ -1,6 +1,7 @@
 import React, {useCallback, useEffect, useState} from 'react';
-
 import {Routes} from '@giphy/navigation';
+
+import {View} from 'react-native';
 import {DEFAULT_LIMIT} from '@giphy/services/api';
 import {
   fetchTrendingGifs,
@@ -18,8 +19,11 @@ import {
   Slider,
   SearchResult,
   Error,
+  Button,
 } from '@giphy/components';
 import {ISearchScreenProps} from './searchScreen.props';
+import {EmptyResult} from '@giphy/components/empty-result';
+import styles from './searchScreen.styles';
 
 export const SearchScreen = ({navigation}: ISearchScreenProps): JSX.Element => {
   const dispatch = useAppDispatch();
@@ -34,6 +38,7 @@ export const SearchScreen = ({navigation}: ISearchScreenProps): JSX.Element => {
   const currentPage = Math.floor(searchedGifs.length / DEFAULT_LIMIT);
 
   const [typing, setTyping] = useState(false);
+  const [activeview, setActiveview] = useState(false);
 
   useEffect(() => {
     if (trendingGifsStatus === 'idle') dispatch(fetchTrendingGifs(1));
@@ -63,7 +68,7 @@ export const SearchScreen = ({navigation}: ISearchScreenProps): JSX.Element => {
   const errorHandler = useCallback(
     debounce(() => {
       dispatch(fetchTrendingGifs(1));
-    }, 500),
+    }, 250),
     [dispatch],
   );
 
@@ -76,21 +81,26 @@ export const SearchScreen = ({navigation}: ISearchScreenProps): JSX.Element => {
 
   let content: JSX.Element = <Spinner color={Colors.purple} />;
 
+  if (typing && query.length === 0) content = <View />;
   if (trendingGifsStatus === 'loading') {
     content = <Spinner color={Colors.purple} />;
   } else if (query.length !== 0) {
-    content = (
-      <SearchResult
-        data={searchedGifs}
-        query={query}
-        currentPage={currentPage}
-        autoFetchLimit={AUTOFETCH_LIMIT}
-        onCellClick={onGIFClick}
-        maxPageLimit={maxPageLimit}
-        onEndReached={fetchNext}
-        isFetching={isFetchingNext}
-      />
-    );
+    if (activeview) {
+      content = <Slider data={searchedGifs} disableTitle={true} />;
+    } else {
+      content = (
+        <SearchResult
+          data={searchedGifs}
+          query={query}
+          currentPage={currentPage}
+          autoFetchLimit={AUTOFETCH_LIMIT}
+          onCellClick={onGIFClick}
+          maxPageLimit={maxPageLimit}
+          onEndReached={fetchNext}
+          isFetching={isFetchingNext}
+        />
+      );
+    }
   } else if (query.length === 0 && trendingGifs.length > 0 && !typing) {
     content = <Slider data={trendingGifs} />;
   } else if (
@@ -104,7 +114,48 @@ export const SearchScreen = ({navigation}: ISearchScreenProps): JSX.Element => {
 
   return (
     <Screen header={<Header typing={typing} onTyping={onTyping} />}>
+      {searchedGifs.length > 0 && (
+        <View style={styles.buttonContainer}>
+          <Button
+            style={{
+              ...styles.button,
+              backgroundColor: !activeview
+                ? Colors.lightPink
+                : Colors.lightBlack,
+            }}
+            onPress={
+              activeview
+                ? () => {
+                    setActiveview(false);
+                  }
+                : undefined
+            }
+            titleStyle={styles.buttonText}
+            title="Grid View"
+          />
+          <Button
+            style={{
+              ...styles.button,
+              backgroundColor: activeview
+                ? Colors.lightPink
+                : Colors.lightBlack,
+            }}
+            onPress={
+              !activeview
+                ? () => {
+                    setActiveview(true);
+                  }
+                : undefined
+            }
+            titleStyle={styles.buttonText}
+            title="Slide View"
+          />
+        </View>
+      )}
       {content}
+      {searchResultsStatus === 'succeed' && SearchResult.length === 0 && (
+        <EmptyResult />
+      )}
     </Screen>
   );
 };

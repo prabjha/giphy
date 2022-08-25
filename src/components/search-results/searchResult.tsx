@@ -79,12 +79,6 @@ export const SearchResult = memo(
           <View style={styles.buttonContainer}>
             <Button
               titleStyle={GlobalStyles.buttonTitle}
-              onPress={goToTop}
-              title={'Go to Top'}
-              style={GlobalStyles.buttonSecondary}
-            />
-            <Button
-              titleStyle={GlobalStyles.buttonTitle}
               title={'Load More'}
               onPress={onEndReached}
               style={GlobalStyles.buttonPrimary}
@@ -104,21 +98,12 @@ export const SearchResult = memo(
       autoFetchLimit,
     ]);
 
-    const ListEmptyComponent = useCallback(() => {
-      return (
-        <Text style={{color: Colors.white, textAlign: 'center'}}>
-          No Result Found
-        </Text>
-      );
-    }, []);
     return (
       <SafeAreaProvider style={styles.container}>
         <FlatList
           ref={flatListRef}
           showsVerticalScrollIndicator={false}
-          ListEmptyComponent={ListEmptyComponent}
           style={styles.list}
-          contentContainerStyle={{paddingVertical: Spacing.medium}}
           data={data}
           getItemLayout={(_, index) => ({
             length: GIF_WIDTH,
@@ -132,8 +117,8 @@ export const SearchResult = memo(
           renderItem={renderListItem}
           ItemSeparatorComponent={ListItemSeparator}
           ListFooterComponent={renderListFooter}
-          ListHeaderComponent={renderListHeader}
-          onEndReachedThreshold={0.5}
+          ListHeaderComponent={data ? renderListHeader : null}
+          onEndReachedThreshold={0.2}
           onEndReached={
             currentPage < autoFetchLimit && currentPage < maxPageLimit
               ? onEndReached
