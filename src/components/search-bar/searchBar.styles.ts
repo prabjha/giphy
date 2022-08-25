@@ -35,6 +35,9 @@ export default StyleSheet.create({
   cancelButton: {
     height: '100%',
     padding: Spacing.smaller,
+    paddingRight: 0,
+    marginLeft: Spacing.smaller,
+    justifyContent: 'center'
   },
   cancel: {
     color: Colors.white,
