@@ -47,7 +47,7 @@ export const Slider = memo((props: ICarouselProps) => {
     return (
       <View style={{width: WINDOW_WIDTH}}>
         <GIFCard
-          imageUrl={item.images.original.webp}
+          imageUrl={item.images.original.url}
           width={ITEM_WIDTH}
           height={ITEM_WIDTH}
         />
@@ -84,7 +84,7 @@ export const Slider = memo((props: ICarouselProps) => {
           },
         ]}>
         <Image
-          source={{uri: item.images.fixed_width_small.webp}}
+          source={{uri: item.images.fixed_width_small.url}}
           style={{
             width: GALLERY_IMAGE_SIZE,
             height: GALLERY_IMAGE_SIZE,

@@ -41,7 +41,7 @@ export const GIFDetailScreen = ({route}: IGIFScreenProps) => {
     <Screen>
       <View style={[styles.container, styles.center]}>
         <GIFCard
-          imageUrl={gif.images.original.webp}
+          imageUrl={gif.images.original.url}
           width={ITEM_WIDTH}
           height={ITEM_HEIGHT}
         />

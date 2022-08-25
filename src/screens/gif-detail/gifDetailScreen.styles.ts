@@ -1,4 +1,4 @@
-import {Fonts, Spacing} from '@giphy/theme';
+import {Colors, Fonts, Spacing} from '@giphy/theme';
 import {StyleSheet} from 'react-native';
 
 export default StyleSheet.create({
@@ -25,5 +25,6 @@ export default StyleSheet.create({
     fontSize: 24,
     textAlign: 'center',
     textTransform: 'capitalize',
+    color: Colors.white,
   },
 });

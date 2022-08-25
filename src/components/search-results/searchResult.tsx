@@ -59,7 +59,7 @@ export const SearchResult = memo(
           activeOpacity={0.6}
           onPress={() => onCellClick(item.id)}>
           <GIFCard
-            imageUrl={item.images.fixed_width_small.webp}
+            imageUrl={item.images.fixed_width_small.url}
             width={GIF_WIDTH}
             height={GIF_WIDTH}
           />

@@ -6,6 +6,7 @@ export const Spacing = {
   smallPlus: 16,
   smallXPlus: 18,
   medium: 20,
+  mediumPlus: 24,
   large: 30,
   huge: 40,
   hugePlus: 50,

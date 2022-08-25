@@ -8,7 +8,6 @@ export default StyleSheet.create({
     width: '100%',
     height: '100%',
     padding: Spacing.medium,
-    borderWidth: 1,
     borderColor: Colors.white,
     ...Shadow.small,
   },

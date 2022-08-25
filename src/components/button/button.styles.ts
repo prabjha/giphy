@@ -12,7 +12,7 @@ export default StyleSheet.create({
   },
   title: {
     fontFamily: Fonts.regular,
-    fontSize: Spacing.smallPlus,
+    fontSize: 16,
     textAlign: 'center',
   },
 });

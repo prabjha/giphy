@@ -16,6 +16,5 @@ export const GlobalStyles = StyleSheet.create({
   },
   buttonSecondary: {
     backgroundColor: Colors.lightBlack,
-    paddingHorizontal: Spacing.medium,
   },
 });
